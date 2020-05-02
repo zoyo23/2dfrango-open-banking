@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+
+        <form asp-controller="home" asp-action="login" method="post">
+            <input type="text" id="cpf" class="fadeIn second" name="cpf" placeholder="Cpf">
+            <input type="password" id="senha" class="fadeIn third" name="senha" placeholder="Senha">
+            <input type="submit" class="fadeIn fourth" value="Log In">
+        </form>
+
+        <div id="formFooter">
+            <a class="underlineHover" href="#">Termos de Uso</a>
+        </div>
+
+    </div>
+</div>
