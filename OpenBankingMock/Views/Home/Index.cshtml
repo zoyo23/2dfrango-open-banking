@@ -6,6 +6,7 @@
     <div id="formContent">
 
         <form asp-controller="home" asp-action="login" method="post">
+            <input type="hidden" id="clientId" name="clientId" value="@ViewData["clientId"]">
             <input type="text" id="cpf" class="fadeIn second" name="cpf" placeholder="Cpf">
             <input type="password" id="senha" class="fadeIn third" name="senha" placeholder="Senha">
             <input type="submit" class="fadeIn fourth" value="Log In">

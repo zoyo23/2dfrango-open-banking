@@ -7,16 +7,16 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["OpenBankingMock/OpenBankingMock.csproj", "OpenBankingMock/"]
-RUN dotnet restore "OpenBankingMock/OpenBankingMock.csproj"
+COPY ["OpenBankingMock/OpenBankingMock.API.csproj", "OpenBankingMock/"]
+RUN dotnet restore "OpenBankingMock/OpenBankingMock.API.csproj"
 COPY . .
 WORKDIR "/src/OpenBankingMock"
-RUN dotnet build "OpenBankingMock.csproj" -c Release -o /app/build
+RUN dotnet build "OpenBankingMock.API.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "OpenBankingMock.csproj" -c Release -o /app/publish
+RUN dotnet publish "OpenBankingMock.API.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "OpenBankingMock.dll"]
+ENTRYPOINT ["dotnet", "OpenBankingMock.API.dll"]

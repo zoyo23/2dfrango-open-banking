@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using OpenBankingMock.Domain.Interfaces.Services;
 using OpenBankingMock.Models;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace OpenBankingMock.Controllers
 {
@@ -18,8 +16,10 @@ namespace OpenBankingMock.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string clientId)
         {
+            // TODO: Verificar clientId
+            ViewData["clientId"] = clientId;
             return View();
         }
 
@@ -28,11 +28,11 @@ namespace OpenBankingMock.Controllers
             return View();
         }
 
-        public IActionResult Login(string cpf, string senha)
+        public async Task<IActionResult> Login([FromServices] IAutorizacaoService autorizacaoService, string cpf, string senha, string clientId)
         {
-            // Buscar se o usuário existe no banco de dados
-            // Gerar o token de autorização do cliente
-            return Redirect(@$"/aplicacao?token={cpf}");
+            // TODO: Buscar qual o clientId para que o redirect seja o parametrizado
+            var token = await autorizacaoService.GerarToken(cpf, senha, clientId);
+            return Redirect(@$"/aplicacao?token={token}");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
