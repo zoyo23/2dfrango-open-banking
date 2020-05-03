@@ -16,10 +16,13 @@ namespace OpenBankingMock.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index(string clientId)
+        public IActionResult Index(string clientId, string redirect, string param)
         {
             // TODO: Verificar clientId
             ViewData["clientId"] = clientId;
+            ViewData["redirect"] = redirect;
+            ViewData["param"] = param;
+
             return View();
         }
 
@@ -28,11 +31,11 @@ namespace OpenBankingMock.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Login([FromServices] IAutorizacaoService autorizacaoService, string cpf, string senha, string clientId)
+        public async Task<IActionResult> Login([FromServices] IAutorizacaoService autorizacaoService, string cpf, string senha, string clientId, string redirect, string param)
         {
-            // TODO: Buscar qual o clientId para que o redirect seja o parametrizado
+            // TODO: Buscar configuração permitida de redirect usando o clientId
             var code = await autorizacaoService.GerarCodigoIdentificacao(cpf, senha, clientId);
-            return Redirect(@$"/aplicacao?code={code}");
+            return Redirect(@$"{redirect}?code={code}" + (!string.IsNullOrEmpty(param) ? @$"&params={param}" : string.Empty));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
