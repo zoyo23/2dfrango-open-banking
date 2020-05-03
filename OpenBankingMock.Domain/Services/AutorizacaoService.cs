@@ -14,7 +14,7 @@ namespace OpenBankingMock.Domain.Services
             _usuarioRepository = usuarioRepository;
         }
 
-        public async Task<string> GerarToken(string cpf, string senha, string clientId)
+        public async Task<string> GerarCodigoIdentificacao(string cpf, string senha, string clientId)
         {
             // TODO: Verificar também ClientId
             Usuario usuario = await _usuarioRepository.BuscarPorCpfESenha(cpf, senha);

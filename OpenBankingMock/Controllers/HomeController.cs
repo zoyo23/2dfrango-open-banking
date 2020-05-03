@@ -31,8 +31,8 @@ namespace OpenBankingMock.Controllers
         public async Task<IActionResult> Login([FromServices] IAutorizacaoService autorizacaoService, string cpf, string senha, string clientId)
         {
             // TODO: Buscar qual o clientId para que o redirect seja o parametrizado
-            var token = await autorizacaoService.GerarToken(cpf, senha, clientId);
-            return Redirect(@$"/aplicacao?token={token}");
+            var code = await autorizacaoService.GerarCodigoIdentificacao(cpf, senha, clientId);
+            return Redirect(@$"/aplicacao?code={code}");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

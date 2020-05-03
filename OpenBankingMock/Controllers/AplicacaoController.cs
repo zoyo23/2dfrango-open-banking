@@ -14,9 +14,9 @@ namespace OpenBankingMock.Controllers
     [ApiController]
     public class AplicacaoController : ControllerBase
     {
-        public JsonResult Get(string token)
+        public JsonResult Get(string code)
         {
-            return new JsonResult(new { token = token });
+            return new JsonResult(new { code = code });
         }
     }
 }
