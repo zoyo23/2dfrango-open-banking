@@ -18,7 +18,16 @@ namespace OpenBankingMock.Domain.Services
         {
             // TODO: Verificar também ClientId
             Usuario usuario = await _usuarioRepository.BuscarPorCpfESenha(cpf, senha);
-            return usuario.GerarTokenAutorizacao(clientId);
+            return usuario.GerarCodigoAutorizacao(clientId);
+        }
+
+        public async Task<string> GerarAccessToken(string clientId, string clientSecret, string redirect, string code)
+        {
+            // TODO: Validar clientId e clientSecret.
+            // TODO: Verificar se o redirect está igual
+            var cpf = Usuario.ValidarCodigoAutorizacao(clientId, code);
+            Usuario usuario = await _usuarioRepository.BuscarPorCpf(cpf);
+            return usuario.GerarAccessToken(clientId);
         }
     }
 }

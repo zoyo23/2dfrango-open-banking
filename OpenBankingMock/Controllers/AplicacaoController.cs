@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OpenBankingMock.Domain.Interfaces.Services;
 
 namespace OpenBankingMock.Controllers
 {
@@ -14,9 +15,10 @@ namespace OpenBankingMock.Controllers
     [ApiController]
     public class AplicacaoController : ControllerBase
     {
-        public JsonResult Get(string code)
+        public async Task<JsonResult> Get([FromServices]IAutorizacaoService autorizacaoService, string code)
         {
-            return new JsonResult(new { code = code });
+            string accessToken = await autorizacaoService.GerarAccessToken("123", "123", "123", code);
+            return new JsonResult(new { accessToken = accessToken });
         }
     }
 }

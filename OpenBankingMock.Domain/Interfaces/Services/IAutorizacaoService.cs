@@ -8,5 +8,6 @@ namespace OpenBankingMock.Domain.Interfaces.Services
     public interface IAutorizacaoService
     {
         Task<string> GerarCodigoIdentificacao(string cpf, string senha, string clientId);
+        Task<string> GerarAccessToken(string clientId, string clientSecret, string redirect, string code);
     }
 }
